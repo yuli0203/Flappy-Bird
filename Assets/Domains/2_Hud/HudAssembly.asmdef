@@ -1,0 +1,20 @@
+{
+    "name": "HudAssembly",
+    "rootNamespace": "",
+    "references": [
+        "GUID:b0214a6008ed146ff8f122a6a9c2f6cc",
+        "GUID:f51ebe6a0ceec4240a699833d6309b23",
+        "GUID:d5f45697eed620946a3fd5fccfea2c6c",
+        "GUID:5130b013cc8e3b342a2e8a55f14de949",
+        "GUID:54da9f28448f37f49bbe39a0c6a5f328"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

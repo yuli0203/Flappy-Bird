@@ -1,0 +1,114 @@
+# =============== #
+# Unity generated #
+# =============== #
+/[Ll]ibrary/
+/[Tt]emp/
+/[Oo]bj/
+/[Bb]uild/
+/[Bb]uilds/
+/[Ll]ogs/
+/[Mm]emoryCaptures/
+ 
+# ===================================== #
+# Visual Studio / MonoDevelop generated #
+# ===================================== #
+ExportedObj/
+.consulo/
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+*.DotSettings
+Assets/UnityVS
+
+
+# ============ #
+# Merge tool generated #
+# ============ #
+*.orig
+
+# ============ #
+# Visual Studio cache directory
+# ============ #
+.vs/
+
+# ============ #
+# Gradle cache directory
+# ============ #
+.gradle/
+
+
+# ============ #
+# OS generated #
+# ============ #
+.DS_Store*
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+[Tt]humbs.db
+
+
+# ============== #
+# Build Products #
+# ============== #
+*.apk
+*.exe
+*.ipa
+.vs/
+.idea/
+ServerData/*
+
+# Ignore unnecessary addressable build artifacts
+/[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/*/*.bin*
+
+
+# ============== #
+# Unity3D generated meta files
+# ============== #
+
+# Never ignore Asset meta data
+!/[Aa]ssets/**/*.meta
+*.pidb.meta
+*.pdb.meta
+*.mdb.meta
+
+# ======================= #
+# Ignore Firebase helpers #
+# ======================= #
+Assets/Firebase/Editor/*.exe
+
+# =============== #
+# JetBrains Rider #
+# =============== #
+[Aa]ssets/Plugins/Editor/JetBrains*
+
+
+# =============== #
+# Unity3D generated file on crash reports
+# =============== #
+
+sysinfo.txt
+
+# =============== #
+# Builds
+# =============== #
+
+*.apk
+*.unitypackage
+
+# =============== #
+# Crashlytics generated file
+# =============== #
+
+crashlytics-build.properties
