@@ -20,7 +20,6 @@ public class TrackScope : LifetimeScope
         // View Model
         builder.RegisterComponentInHierarchy<EventSystemViewModel>();
         builder.RegisterComponentInHierarchy<CharacterViewModel>();
-        builder.RegisterComponentInHierarchy<StickViewModel>();
         builder.RegisterComponentInHierarchy<RaccoonViewModel>();
         builder.RegisterComponentInHierarchy<PathViewModel>();
         builder.RegisterComponentInHierarchy<PoolViewModel>();

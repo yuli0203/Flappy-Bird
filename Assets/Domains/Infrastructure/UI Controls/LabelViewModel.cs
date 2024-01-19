@@ -10,6 +10,9 @@ namespace UI
 
         public void Init(string labelDesciption)
         {
+            if (this.label.text.Equals(labelDesciption))
+                return;
+
             this.label.text = labelDesciption;
         }
     }

@@ -14,8 +14,13 @@ public class RaccoonViewModel : MonoBehaviour
     [SerializeField] Collider self ;
 
     private GameStateData gameState;
+    private Collider otherCollider;
+    private bool isColliding;
+    private bool endGame;
+    private readonly float fallForce = 5f;
 
     public event Action<Collider> OnCollision;
+    public Collider Collider => self;
 
     [Inject]
     public void Construct(GameStateData gameState)
@@ -35,6 +40,7 @@ public class RaccoonViewModel : MonoBehaviour
 
     internal void Fall()
     {
+        endGame = true;
         body.useGravity = true;
         self.isTrigger = false;
     }
@@ -42,5 +48,27 @@ public class RaccoonViewModel : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         OnCollision?.Invoke(other);
+        this.otherCollider = other;
+        isColliding = true;
     }
+
+    void OnTriggerExit(Collider other)
+    {
+        isColliding = false;
+    }
+
+    private void FixedUpdate()
+    {
+        if (isColliding) 
+        {
+            OnCollision?.Invoke(otherCollider);
+        }
+
+        if (endGame)
+        {
+            body.velocity = new Vector2(0, 0f); // Reset vertical velocity before applying force
+            body.AddForce(Vector2.right * fallForce, ForceMode.Impulse);
+        }
+    }
+
 }

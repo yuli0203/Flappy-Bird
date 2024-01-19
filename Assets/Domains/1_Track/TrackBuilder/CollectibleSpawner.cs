@@ -11,6 +11,7 @@ public class CollectibleSpawner : TickableSubscriber
     private List<GameObject> toRemove = new List<GameObject>();
     private List<SimplePool> collectiblePools = new List<SimplePool>();
     private Dictionary<GameObject, Collider> colliderCache = new Dictionary<GameObject, Collider>();
+    private Dictionary<CollectibleData, Transform> lastSpawnPositions = new Dictionary<CollectibleData, Transform>();
 
     private int initialPoolSize = 40;
 
@@ -78,7 +79,20 @@ public class CollectibleSpawner : TickableSubscriber
             }
 
             // Randomly select a collectible type from supported types
-            CollectibleData randomCollectible = spawnerData.supportedTypes[Random.Range(0, spawnerData.supportedTypes.Length)];
+            CollectibleData randomCollectible = null;
+
+            while (randomCollectible == null)
+            {
+                randomCollectible = spawnerData.supportedTypes[Random.Range(0, spawnerData.supportedTypes.Length)];
+                // Check if enough distance has passed since the last spawn of this collectible type
+                if (randomCollectible.distanceBetweenLastSpawn != 0 && lastSpawnPositions.TryGetValue(randomCollectible, out Transform lastSpawnPosition) &&
+                    currentZ - lastSpawnPosition.position.z < randomCollectible.distanceBetweenLastSpawn)
+                {
+                    // Attempt to spawn something else if too soon
+                    randomCollectible = null;
+                }
+
+            }
 
             // Use LeanPool to spawn the collectible prefab
             GameObject collectibleObject = SpawnCollectible(randomCollectible.prefab);
@@ -97,8 +111,10 @@ public class CollectibleSpawner : TickableSubscriber
                     // Calculate the clamped X position based on the collider bounds
                     float clampedX = Mathf.Clamp(randomX, -spawnerData.width + collider.bounds.extents.x, spawnerData.width - collider.bounds.extents.x);
 
+                    float randomY = Random.Range(-spawnerData.height, spawnerData.height);
+
                     // Set the position with the clamped X value
-                    collectibleObject.transform.position = new Vector3(clampedX, spawnerData.height, currentZ);
+                    collectibleObject.transform.position = new Vector3(clampedX, spawnerData.center + randomY, currentZ);
                 }
                 else
                 {
@@ -109,6 +125,9 @@ public class CollectibleSpawner : TickableSubscriber
                 currentZ += spawnerData.distanceBetweenSpawns;
 
                 lastSpawn = collectibleObject;
+
+                // Update the last spawn position for this collectible type
+                lastSpawnPositions[randomCollectible] = collectibleObject.transform;
             }
         }
     }

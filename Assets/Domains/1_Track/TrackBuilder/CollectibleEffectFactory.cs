@@ -8,19 +8,17 @@ public class CollectibleEffectFactory : ICollectibleEffectFactory
 {
     private RaccoonViewModel raccoon;
     private GameStateData gameState;
-    private StickViewModel stick;
     private HorizontalCharacterController raccoonController;
     private CollectibleSpawner spawner;
     private AudioManager audioManager;
     private CollectibleSpawnerData collectibleData;
 
     [Inject]
-    public void Construct(GameStateData gameState, RaccoonViewModel raccoon, StickViewModel stick, HorizontalCharacterController controller, CollectibleSpawner spawner, AudioManager audio,
+    public void Construct(GameStateData gameState, RaccoonViewModel raccoon, HorizontalCharacterController controller, CollectibleSpawner spawner, AudioManager audio,
         CollectibleSpawnerData collectibleData)
     {
         this.raccoon = raccoon;
         this.gameState = gameState;
-        this.stick = stick;
         this.raccoonController = controller;
         this.spawner = spawner;
         this.audioManager = audio;
@@ -29,20 +27,27 @@ public class CollectibleEffectFactory : ICollectibleEffectFactory
 
     public Action CreateEffect(Collider collider)
     {
-        if (collider.CompareTag("Stick"))
+        if (collider == null)
         {
-            return () => StickEffect(collider);
+            return null;
         }
-        else if (collider.CompareTag("Diamond"))
+
+        if (collider.CompareTag("Diamond"))
         {
             return () => DiamondEffect(collider);
         }
-        else if (collider.CompareTag("Cutter"))
-        {
-            return () => CutterEffect(collider);
-        }
         else if (collider.CompareTag("Hole"))
         {
+            return () => HoleEffect(collider);
+        }        
+        else if (collider.CompareTag("Pipes"))
+        {
+            var pipes = collider.GetComponent<PipesViewModel>();
+            bool skipEffectCreation = pipes != null && pipes.IsInSafeZone(raccoon.Collider);
+            if (skipEffectCreation)
+            {
+                return null;
+            }
             return () => HoleEffect(collider);
         }
 
@@ -56,26 +61,11 @@ public class CollectibleEffectFactory : ICollectibleEffectFactory
         PlaySound(collider);
     }
 
-    private void CutterEffect(Collider collider)
-    {
-        spawner.Despawn(collider.gameObject);
-        stick.ChangeSize(stick.StickSize - stick.StickSizeDelta);
-        PlaySound(collider);
-    }
-
     private void DiamondEffect(Collider collider)
     {
         collider.gameObject.SetActive(false);
         spawner.Despawn(collider.gameObject);
         gameState.diamonds += 1;
-        PlaySound(collider);
-    }
-
-    private void StickEffect(Collider collider)
-    {
-        collider.gameObject.SetActive(false);
-        stick.ChangeSize(stick.StickSize + stick.StickSizeDelta);
-        spawner.Despawn(collider.gameObject);
         PlaySound(collider);
     }
 

@@ -14,23 +14,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnerData:
     supportedTypes:
-    - collectibleId: Stick
-      prefab: {fileID: 8549801273067832553, guid: 48a66c23704528442b2bd3ac9266f735, type: 3}
-      sound: {fileID: 8300000, guid: 4988f027477cfa443b5b6e361633c652, type: 3}
     - collectibleId: Diamond
       prefab: {fileID: 1500845622016370, guid: a7a36130ead77fb46af75641a2d969a8, type: 3}
       sound: {fileID: 8300000, guid: 0e3128dced003a844907e20bbe102330, type: 3}
-    - collectibleId: Cutter
-      prefab: {fileID: 2566266347943511965, guid: 317a806648292f544883a5e6960cfa4d, type: 3}
-      sound: {fileID: 8300000, guid: dd540f97217458e4f9d211d81b7824f9, type: 3}
-    - collectibleId: Hole
-      prefab: {fileID: 2996892073873813364, guid: d9863cdeaffdb3c4fb6028c202f10aaa, type: 3}
+      distanceBetweenLastSpawn: 0
+    - collectibleId: Pipes
+      prefab: {fileID: 2482230616364903231, guid: aef6c4e566b7f034cb96ed11994ad105, type: 3}
       sound: {fileID: 8300000, guid: b53f7afd6181ff344b2636c36a7af712, type: 3}
+      distanceBetweenLastSpawn: 2.15
     width: 0.001
+    height: 1.5
     range: 20
     minSpawnDistance: 2
-    height: 0.2
-    percentToFailSpawn: 25
+    center: 0.2
+    percentToFailSpawn: 30
     spawnAttempts: 20
     distanceBetweenSpawns: 1
     moveSpeed: 3

@@ -22,6 +22,10 @@ public class HorizontalCharacterController : TickableSubscriber
     public void SetControllable(bool enabled)
     {
         controllable = enabled;
+        if (enabled)
+        {
+            rigidBody.useGravity = true;
+        }
     }
 
     protected override void MakeTick()

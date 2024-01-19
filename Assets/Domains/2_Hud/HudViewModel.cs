@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class HudViewModel : MonoBehaviour
 {
     [SerializeField] LabelButtonViewModel labelButton;
+    [SerializeField] LabelButtonViewModel labelScoreButton;
     [SerializeField] Button tutorialButton;
     [SerializeField] Button gameOverButton;
 
@@ -33,6 +34,11 @@ public class HudViewModel : MonoBehaviour
         {
             gameOverButton.gameObject?.SetActive(enabled);
         }
+    }
+
+    public void SetHighScore(int amount)
+    {
+        labelScoreButton?.Init($"High Score: {amount}");
     }
 
     public void SetDiamonds(int amount)

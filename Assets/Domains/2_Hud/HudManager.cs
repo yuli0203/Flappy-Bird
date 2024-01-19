@@ -12,6 +12,7 @@ public class HudManager : TickableSubscriber
     {
         hud.SetGameOver(false);
         hud.SetTutorial(true);
+
     }
 
     [Inject]
@@ -22,6 +23,7 @@ public class HudManager : TickableSubscriber
 
         hud.OnTutorialClick += OnTutorialFinished;
         hud.OnGameOverClick += OnGameOver;
+        hud.SetHighScore(gameState.highScore);
     }
 
     protected override void MakeTick()
@@ -30,7 +32,8 @@ public class HudManager : TickableSubscriber
         if (gameState != null && gameState.gameOver)
         {
             hud.SetGameOver(true);
-        }    
+            hud.SetHighScore(gameState.highScore);
+        }
     }
 
     private void OnTutorialFinished()
