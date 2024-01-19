@@ -26,7 +26,7 @@ MonoBehaviour:
     - collectibleId: Hole
       prefab: {fileID: 2996892073873813364, guid: d9863cdeaffdb3c4fb6028c202f10aaa, type: 3}
       sound: {fileID: 8300000, guid: b53f7afd6181ff344b2636c36a7af712, type: 3}
-    width: 1.2
+    width: 0.001
     range: 20
     minSpawnDistance: 2
     height: 0.2

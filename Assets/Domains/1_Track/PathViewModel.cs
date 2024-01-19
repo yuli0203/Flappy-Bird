@@ -4,12 +4,16 @@ using VContainer;
 public class PathViewModel : PoolViewModel
 {
     public float scrollSpeed = 0.1f;
+    public SpriteRenderer renderer;
+    public Material material;
     private GameStateData gameStateData;
 
     [Inject]
     public void Construct(GameStateData gameStateData)
     {
         this.gameStateData = gameStateData;
+        renderer.material = material;
+
     }
 
     void Update()
@@ -23,9 +27,9 @@ public class PathViewModel : PoolViewModel
         float offset = Time.time * scrollSpeed;
 
         // Create a new Vector2 with the calculated offset
-        Vector2 offsetVector = new Vector2(0, offset);
+        Vector2 offsetVector = new Vector2(offset, 0);
 
         // Apply the offset to the material's main texture
-        GetComponent<Renderer>().material.mainTextureOffset = offsetVector;
+        material.mainTextureOffset = offsetVector;
     }
 }

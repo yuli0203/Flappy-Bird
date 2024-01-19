@@ -6,16 +6,17 @@ using VContainer.Unity;
 
 public class HorizontalCharacterController : TickableSubscriber
 {
-    [SerializeField] float moveSpeed = 2f;
-    [SerializeField] float limitMovement = 1.5f;
+    [SerializeField] float jumpForce = 2f;
     [SerializeField] bool controllable = true;
 
     Transform movingObject;
+    private Rigidbody rigidBody;
 
     [Inject]
     public void Construct(CharacterViewModel characterViewModel)
     {
         this.movingObject = characterViewModel.transform;
+        this.rigidBody = movingObject.GetComponent<Rigidbody>();
     }
 
     public void SetControllable(bool enabled)
@@ -30,53 +31,17 @@ public class HorizontalCharacterController : TickableSubscriber
             return;
         }
 
-        HandleKeyboardInput();
-        HandleSwipeInput();
-    }
-
-    void HandleKeyboardInput()
-    {
-        // Keyboard Controls
-        float horizontalInput = Input.GetAxis("Horizontal");
-        MoveCharacter(horizontalInput);
-    }
-
-    void HandleSwipeInput()
-    {
-        if (Input.touchCount > 0)
+        if (Input.GetMouseButtonDown(0))  // Change to Input.GetTouch(0).phase == TouchPhase.Began for mobile
         {
-            Touch touch = Input.GetTouch(0);
+            Jump();
+        }
 
-            // Detect swipe direction
-            if (touch.phase == TouchPhase.Moved)
-            {
-                float swipeDelta = touch.deltaPosition.x;
-
-                if (Mathf.Abs(swipeDelta) > 10f) // Adjust the sensitivity of the swipe
-                {
-                    // Swipe to the right
-                    if (swipeDelta > 0)
-                    {
-                        MoveCharacter(1f);
-                    }
-                    // Swipe to the left
-                    else
-                    {
-                        MoveCharacter(-1f);
-                    }
-                }
-            }
+        void Jump()
+        {
+            // Add an initial upward force to the Rigidbody
+            rigidBody.velocity = new Vector2(rigidBody.velocity.x, 0f); // Reset vertical velocity before applying force
+            rigidBody.AddForce(Vector2.up * jumpForce, ForceMode.Impulse);
         }
     }
 
-    void MoveCharacter(float horizontalInput)
-    {
-        Vector3 movement = new Vector3(horizontalInput, 0f, 0f);
-        Vector3 newPosition = movingObject.position + movement * moveSpeed * Time.deltaTime;
-
-        // Limit movement within the specified range
-        newPosition.x = Mathf.Clamp(newPosition.x, -limitMovement, limitMovement);
-
-        movingObject.position = newPosition;
-    }
 }

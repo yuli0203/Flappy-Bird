@@ -51,16 +51,9 @@ public class CollectibleEffectFactory : ICollectibleEffectFactory
 
     private void HoleEffect(Collider collider)
     {
-        if (stick.StickSize < collider.bounds.size.x)
-        {
-            gameState.gameOver = true;
-            raccoon.Fall();
-            PlaySound(collider);
-        }
-        else
-        {
-            audioManager.Play(collectibleData.savedAudioClip);
-        }
+        gameState.gameOver = true;
+        raccoon.Fall();
+        PlaySound(collider);
     }
 
     private void CutterEffect(Collider collider)
