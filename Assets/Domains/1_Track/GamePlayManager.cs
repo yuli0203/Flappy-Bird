@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -15,8 +16,7 @@ public class GamePlayManager : TickableSubscriber
     private HorizontalCharacterController controller;
     private ICollectibleEffectFactory effectFatory;
     private bool finishGame;
-    private Action currentAction;
-    private Collider currentCollider;
+    private UniTask? currentAction;
 
     [Inject]
     public void Construct(GameStateData gameState, RunnerViewModel raccoon, CollectibleSpawner spawner, HorizontalCharacterController controller, ICollectibleEffectFactory effectFatory)
@@ -40,21 +40,15 @@ public class GamePlayManager : TickableSubscriber
             return;
         }
 
-        if (collider != currentCollider)
+        if (currentAction == null)
         {
-            currentCollider = collider;
-            currentAction = null;
+            currentAction = effectFatory.CreateEffect(collider);
+
+            // Setup a continuation to set currentAction to null after the UniTask completes
+            currentAction.Value.ContinueWith(() => currentAction = null).Forget();
         }
-
-        if (currentAction != null)
-        {
-            return;
-        }
-
-        currentAction = effectFatory.CreateEffect(collider);
-
-        currentAction?.Invoke();
     }
+
 
     protected override void MakeTick()
     {

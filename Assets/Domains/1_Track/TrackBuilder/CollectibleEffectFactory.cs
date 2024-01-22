@@ -1,6 +1,8 @@
+using Cysharp.Threading.Tasks;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using VContainer;
 
@@ -25,59 +27,75 @@ public class CollectibleEffectFactory : ICollectibleEffectFactory
         this.collectibleData = collectibleData;
     }
 
-    public Action CreateEffect(Collider collider)
+    public async UniTask CreateEffect(Collider collider)
     {
         if (collider == null)
         {
-            return null;
+            return;
         }
 
         if (collider.CompareTag("Diamond"))
         {
-            return () => DiamondEffect(collider);
+            DiamondEffect(collider).Forget();
         }
         else if (collider.CompareTag("Hole"))
         {
-            return () => HoleEffect(collider);
+            await HoleEffect(collider);
         }        
         else if (collider.CompareTag("Pipes"))
         {
-            var pipes = collider.GetComponent<PipesViewModel>();
+            await PipesEffect(collider);
+        }
+
+        return;
+    }
+
+    private async Task PipesEffect(Collider collider)
+    {
+        var pipes = collider.GetComponent<PipesViewModel>();
+        while (pipes.IsWithinPipes(runner.Collider))
+        {
             bool skipEffectCreation = pipes != null && pipes.IsInSafeZone(runner.Collider);
             if (skipEffectCreation)
             {
-                return null;
+                await UniTask.Yield();
             }
-            return () => HoleEffect(collider);
-        }
 
-        return () => { };
+            else
+            {
+                await HoleEffect(collider);
+                break;
+            }
+        }
     }
 
-    private void HoleEffect(Collider collider)
+    private UniTask HoleEffect(Collider collider)
     {
         gameState.gameOver = true;
         runner.Fall();
         PlaySound(collider);
+        return UniTask.CompletedTask;
     }
 
-    private void DiamondEffect(Collider collider)
+    private UniTask DiamondEffect(Collider collider)
     {
         collider.gameObject.SetActive(false);
         spawner.Despawn(collider.gameObject);
         gameState.diamonds += 1;
         PlaySound(collider);
+        return UniTask.CompletedTask;
     }
 
-    private void PlaySound(Collider collider)
+    private UniTask PlaySound(Collider collider)
     {
         foreach(var collectible in collectibleData.supportedTypes)
         {
             if (collectible.collectibleId == collider.tag)
             {
                 audioManager.Play(collectible.sound);
-                return;
             }
         }
+
+        return UniTask.CompletedTask;
     }
 }

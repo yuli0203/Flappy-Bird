@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,6 +24,12 @@ public class PipesViewModel : MonoBehaviour
         bool isInSafeZoneUp = safeZoneUp.position.y > colliderBounds.max.y;
         bool isInSafeZoneDown = safeZoneDown.position.y < colliderBounds.min.y;
 
-        return (isInSafeZoneUp && isInSafeZoneDown) || colliderBounds.min.z > pipesCollider.bounds.max.z || colliderBounds.max.z < pipesCollider.bounds.min.z;
+        return isInSafeZoneUp && isInSafeZoneDown;
+    }
+
+    internal bool IsWithinPipes(Collider collider)
+    {
+        Bounds colliderBounds = collider.bounds;
+        return colliderBounds.min.z < pipesCollider.bounds.max.z && colliderBounds.max.z > pipesCollider.bounds.min.z;
     }
 }
