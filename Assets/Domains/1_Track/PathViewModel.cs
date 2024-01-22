@@ -1,4 +1,6 @@
+using Animations;
 using UnityEngine;
+using UnityEngine.UIElements;
 using VContainer;
 
 public class PathViewModel : PoolViewModel
@@ -6,14 +8,17 @@ public class PathViewModel : PoolViewModel
     public float scrollSpeed = 0.1f;
     public Renderer _renderer;
     private GameStateData gameStateData;
+    private IAnimationService animationService;
 
     [Inject]
-    public void Construct(GameStateData gameStateData)
+    public void Construct(GameStateData gameStateData, IAnimationService animationService)
     {
         this.gameStateData = gameStateData;
+        this.animationService = animationService;
+        animationService.Subscribe(gameObject, Rotate);
     }
 
-    void Update()
+    void Rotate(Transform trans)
     {
         if (gameStateData == null || !gameStateData.gameRunning)
         {
@@ -28,5 +33,10 @@ public class PathViewModel : PoolViewModel
 
         // Apply the offset to the material's main texture using SetTextureOffset
         _renderer.material.mainTextureOffset = offsetVector;
+    }
+
+    private void OnDestroy()
+    {
+        animationService.UnSubscribe(gameObject);
     }
 }

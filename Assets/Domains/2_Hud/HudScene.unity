@@ -918,6 +918,26 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6694526145723463, guid: 11b491d9fb0a3e047a0ebbb9150b88ad, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
+    - target: {fileID: 6694526145723463, guid: 11b491d9fb0a3e047a0ebbb9150b88ad, type: 3}
+      propertyPath: m_Color.a
+      value: 0.5529412
+      objectReference: {fileID: 0}
+    - target: {fileID: 6694526145723463, guid: 11b491d9fb0a3e047a0ebbb9150b88ad, type: 3}
+      propertyPath: m_Color.b
+      value: 0.3490566
+      objectReference: {fileID: 0}
+    - target: {fileID: 6694526145723463, guid: 11b491d9fb0a3e047a0ebbb9150b88ad, type: 3}
+      propertyPath: m_Color.g
+      value: 0.18024305
+      objectReference: {fileID: 0}
+    - target: {fileID: 6694526145723463, guid: 11b491d9fb0a3e047a0ebbb9150b88ad, type: 3}
+      propertyPath: m_Color.r
+      value: 0.13336597
+      objectReference: {fileID: 0}
+    - target: {fileID: 6694526145723463, guid: 11b491d9fb0a3e047a0ebbb9150b88ad, type: 3}
       propertyPath: m_PixelsPerUnitMultiplier
       value: 10.59
       objectReference: {fileID: 0}
@@ -1247,7 +1267,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6829087649467851884, guid: 11b491d9fb0a3e047a0ebbb9150b88ad, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -3.19
+      value: -3.1899414
       objectReference: {fileID: 0}
     - target: {fileID: 6829087649467851884, guid: 11b491d9fb0a3e047a0ebbb9150b88ad, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -1354,6 +1374,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3cafbd0dea26f440b002edcb87eedcf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1541197377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 695564244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!1 &1711644044
 GameObject:
   m_ObjectHideFlags: 0

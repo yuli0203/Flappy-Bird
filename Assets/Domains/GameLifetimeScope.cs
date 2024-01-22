@@ -19,7 +19,7 @@ public class GameLifetimeScope : LifetimeScope
         // Services
         builder.RegisterComponentInHierarchy<AudioManager>();
         builder.Register<SceneService>(Lifetime.Singleton);
-        builder.Register<IAnimationService, AnimationService>(Lifetime.Scoped);
+        builder.Register<IAnimationService, AnimationService>(Lifetime.Singleton);
 
         builder.RegisterEntryPoint<SetupManager>(Lifetime.Scoped);
     }

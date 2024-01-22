@@ -17,5 +17,8 @@ public class GameStateData
     public int diamonds;
     public int pipes;
     public int highScore;
+
+    public int pipeScore = 10;
+    public int diamondScore = 1;
 }
 

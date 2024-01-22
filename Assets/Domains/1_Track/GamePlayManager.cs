@@ -68,7 +68,8 @@ public class GamePlayManager : TickableSubscriber
     private void FinishGame()
     {
         finishGame = true;
-        gameState.highScore = gameState.pipes;
-        PlayerPrefs.SetInt(HighScore, gameState.pipes);
+        int score = gameState.pipes* gameState.pipeScore + gameState.diamonds * gameState.diamondScore;
+        gameState.highScore = score > gameState.highScore ? score : gameState.highScore;
+        PlayerPrefs.SetInt(HighScore, gameState.highScore);
     }
 }

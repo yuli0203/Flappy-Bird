@@ -18,17 +18,19 @@ MonoBehaviour:
       prefab: {fileID: 1500845622016370, guid: a7a36130ead77fb46af75641a2d969a8, type: 3}
       sound: {fileID: 8300000, guid: 0e3128dced003a844907e20bbe102330, type: 3}
       distanceBetweenLastSpawn: 0
+      rotate: 1
     - collectibleId: Pipes
       prefab: {fileID: 2482230616364903231, guid: aef6c4e566b7f034cb96ed11994ad105, type: 3}
       sound: {fileID: 8300000, guid: b53f7afd6181ff344b2636c36a7af712, type: 3}
       distanceBetweenLastSpawn: 2.15
+      rotate: 0
     width: 0.001
     height: 1.5
     range: 20
     minSpawnDistance: 2
     center: 0.2
     percentToFailSpawn: 30
-    spawnAttempts: 20
+    spawnAttempts: 10
     distanceBetweenSpawns: 1
     moveSpeed: 3
     initialPoolSize: 0

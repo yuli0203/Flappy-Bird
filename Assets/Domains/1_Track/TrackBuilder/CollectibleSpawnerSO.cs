@@ -37,4 +37,5 @@ public class CollectibleData
     public GameObject prefab;
     public AudioClip sound;
     public float distanceBetweenLastSpawn;
+    public bool rotate;
 }

@@ -1,3 +1,4 @@
+using Animations;
 using System.Collections.Generic;
 using UnityEngine;
 using VContainer;
@@ -7,13 +8,14 @@ using VContainer.Unity;
 public class CollectibleSpawner : TickableSubscriber
 {
     private CollectibleSpawnerData spawnerData;
+    private IAnimationService animationService;
     private List<GameObject> spawns = new List<GameObject>();
     private List<GameObject> toRemove = new List<GameObject>();
     private List<SimplePool> collectiblePools = new List<SimplePool>();
     private Dictionary<GameObject, Collider> colliderCache = new Dictionary<GameObject, Collider>();
     private Dictionary<CollectibleData, Transform> lastSpawnPositions = new Dictionary<CollectibleData, Transform>();
 
-    private int initialPoolSize = 40;
+    private int initialPoolSize = 10;
 
     // Distance to despawn objects
     private readonly float lineOfSightDistance = -4;
@@ -21,10 +23,16 @@ public class CollectibleSpawner : TickableSubscriber
     private GameObject lastSpawn;
     private bool spawn;
 
+    // Animate
+    public float rotationSpeed = 50f; // Adjust the speed of rotation in the Inspector
+    public Vector3 rotationDirection = new Vector3(0, -1, 0);
+
     [Inject]
-    public void Construct(CollectibleSpawnerData spawnerData, PoolViewModel poolParent)
+    public void Construct(CollectibleSpawnerData spawnerData, PoolViewModel poolParent, IAnimationService animationService)
     {
         this.spawnerData = spawnerData;
+        this.animationService = animationService;
+
         // Initialize collectible pools
         foreach (CollectibleData collectibleType in spawnerData.supportedTypes)
         {
@@ -97,6 +105,12 @@ public class CollectibleSpawner : TickableSubscriber
             // Use LeanPool to spawn the collectible prefab
             GameObject collectibleObject = SpawnCollectible(randomCollectible.prefab);
             spawns.Add(collectibleObject);
+
+            if (randomCollectible.rotate)
+            {
+                // Should not rotate gameobject with a collider. Expecting to rotate child object
+                animationService.Subscribe(collectibleObject.transform.GetChild(0).gameObject, RotationAnimation);
+            }
 
             if (collectibleObject != null)
             {
@@ -197,4 +211,8 @@ public class CollectibleSpawner : TickableSubscriber
         this.spawn = spawn;
     }
 
+    public void RotationAnimation(Transform trans)
+    {
+        trans.Rotate(rotationDirection, rotationSpeed * Time.deltaTime);
+    }
 }
