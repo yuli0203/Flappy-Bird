@@ -15,6 +15,7 @@ public class GameStateData
     public bool restart = false;
 
     public int diamonds;
+    public int pipes;
     public int highScore;
 }
 

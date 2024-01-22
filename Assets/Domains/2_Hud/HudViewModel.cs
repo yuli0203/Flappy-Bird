@@ -9,6 +9,7 @@ public class HudViewModel : MonoBehaviour
 {
     [SerializeField] LabelButtonViewModel labelButton;
     [SerializeField] LabelButtonViewModel labelScoreButton;
+    [SerializeField] LabelButtonViewModel labelPipesButton;
     [SerializeField] Button tutorialButton;
     [SerializeField] Button gameOverButton;
 
@@ -44,6 +45,11 @@ public class HudViewModel : MonoBehaviour
     public void SetDiamonds(int amount)
     {
         labelButton?.Init(amount.ToString());
+    }
+
+    public void SetPipes(int amount)
+    {
+        labelPipesButton?.Init(amount.ToString());
     }
 
     private void OnDestroy()

@@ -50,5 +50,6 @@ public class SetupManager : TickableSubscriber, IStartable
         gameState.gameRunning = false;
         gameState.gameOver = false;
         gameState.diamonds = 0;
+        gameState.pipes = 0;
     }
 }

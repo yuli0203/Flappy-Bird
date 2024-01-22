@@ -36,7 +36,7 @@ public class CollectibleEffectFactory : ICollectibleEffectFactory
 
         if (collider.CompareTag("Diamond"))
         {
-            DiamondEffect(collider).Forget();
+            await DiamondEffect(collider);
         }
         else if (collider.CompareTag("Hole"))
         {
@@ -64,9 +64,11 @@ public class CollectibleEffectFactory : ICollectibleEffectFactory
             else
             {
                 await HoleEffect(collider);
-                break;
+                return;
             }
         }
+
+        gameState.pipes += 1;
     }
 
     private UniTask HoleEffect(Collider collider)

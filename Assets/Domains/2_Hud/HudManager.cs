@@ -29,6 +29,7 @@ public class HudManager : TickableSubscriber
     protected override void MakeTick()
     {
         hud?.SetDiamonds(gameState.diamonds);
+        hud?.SetPipes(gameState.pipes);
         if (gameState != null && gameState.gameOver)
         {
             hud.SetGameOver(true);

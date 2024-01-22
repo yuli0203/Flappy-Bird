@@ -17,6 +17,7 @@ public class GamePlayManager : TickableSubscriber
     private ICollectibleEffectFactory effectFatory;
     private bool finishGame;
     private UniTask? currentAction;
+    private Collider currentCollider;
 
     [Inject]
     public void Construct(GameStateData gameState, RunnerViewModel raccoon, CollectibleSpawner spawner, HorizontalCharacterController controller, ICollectibleEffectFactory effectFatory)
@@ -28,26 +29,33 @@ public class GamePlayManager : TickableSubscriber
         this.effectFatory = effectFatory;
 
         gameState.diamonds = 0;
-        gameState.highScore = PlayerPrefs.GetInt(HighScore, gameState.diamonds);
+        gameState.highScore = PlayerPrefs.GetInt(HighScore, gameState.pipes);
 
         raccoon.OnCollision += OnCollision;
     }
 
     private void OnCollision(Collider collider)
     {
-        if (collider == null)
+        if (collider == null || collider == currentCollider)
         {
             return;
         }
 
-        if (currentAction == null)
-        {
-            currentAction = effectFatory.CreateEffect(collider);
+        currentCollider = collider;
 
-            // Setup a continuation to set currentAction to null after the UniTask completes
-            currentAction.Value.ContinueWith(() => currentAction = null).Forget();
+        // Check if the currentAction is in progress
+        if (currentAction != null)
+        {
+            return;
         }
+
+        // Create a new UniTask only if the previous one has completed
+        currentAction = effectFatory.CreateEffect(collider);
+
+        // Setup a continuation to set currentAction to null after the UniTask completes
+        currentAction.Value.ContinueWith(() => currentAction = null).Forget();
     }
+
 
 
     protected override void MakeTick()
@@ -66,7 +74,7 @@ public class GamePlayManager : TickableSubscriber
     private void FinishGame()
     {
         finishGame = true;
-        gameState.highScore = gameState.diamonds;
-        PlayerPrefs.SetInt(HighScore, gameState.diamonds);
+        gameState.highScore = gameState.pipes;
+        PlayerPrefs.SetInt(HighScore, gameState.pipes);
     }
 }
