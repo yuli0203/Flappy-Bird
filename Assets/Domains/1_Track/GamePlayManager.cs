@@ -10,22 +10,21 @@ public class GamePlayManager : TickableSubscriber
     private const string HighScore = "HighScore";
 
     private CollectibleSpawner spawner;
-    private RaccoonViewModel raccoon;
+    private RunnerViewModel raccoon;
     private GameStateData gameState;
-    private StickViewModel stick;
-    private HorizontalCharacterController raccoonController;
+    private HorizontalCharacterController controller;
     private ICollectibleEffectFactory effectFatory;
     private bool finishGame;
     private Action currentAction;
     private Collider currentCollider;
 
     [Inject]
-    public void Construct(GameStateData gameState, RaccoonViewModel raccoon, CollectibleSpawner spawner, HorizontalCharacterController controller, ICollectibleEffectFactory effectFatory)
+    public void Construct(GameStateData gameState, RunnerViewModel raccoon, CollectibleSpawner spawner, HorizontalCharacterController controller, ICollectibleEffectFactory effectFatory)
     {
         this.spawner = spawner;
         this.raccoon = raccoon;
         this.gameState = gameState;
-        this.raccoonController = controller;
+        this.controller = controller;
         this.effectFatory = effectFatory;
 
         gameState.diamonds = 0;
@@ -60,7 +59,7 @@ public class GamePlayManager : TickableSubscriber
     protected override void MakeTick()
     {
         var controllable = gameState.gameRunning && !gameState.gameOver;
-        raccoonController.SetControllable(controllable);
+        controller.SetControllable(controllable);
         raccoon.Walk(controllable);
         spawner.Spawn(gameState.gameRunning);
 

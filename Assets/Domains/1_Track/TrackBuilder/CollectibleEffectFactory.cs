@@ -6,20 +6,20 @@ using VContainer;
 
 public class CollectibleEffectFactory : ICollectibleEffectFactory
 {
-    private RaccoonViewModel raccoon;
+    private RunnerViewModel runner;
     private GameStateData gameState;
-    private HorizontalCharacterController raccoonController;
+    private HorizontalCharacterController runnerController;
     private CollectibleSpawner spawner;
     private AudioManager audioManager;
     private CollectibleSpawnerData collectibleData;
 
     [Inject]
-    public void Construct(GameStateData gameState, RaccoonViewModel raccoon, HorizontalCharacterController controller, CollectibleSpawner spawner, AudioManager audio,
+    public void Construct(GameStateData gameState, RunnerViewModel runner, HorizontalCharacterController controller, CollectibleSpawner spawner, AudioManager audio,
         CollectibleSpawnerData collectibleData)
     {
-        this.raccoon = raccoon;
+        this.runner = runner;
         this.gameState = gameState;
-        this.raccoonController = controller;
+        this.runnerController = controller;
         this.spawner = spawner;
         this.audioManager = audio;
         this.collectibleData = collectibleData;
@@ -43,7 +43,7 @@ public class CollectibleEffectFactory : ICollectibleEffectFactory
         else if (collider.CompareTag("Pipes"))
         {
             var pipes = collider.GetComponent<PipesViewModel>();
-            bool skipEffectCreation = pipes != null && pipes.IsInSafeZone(raccoon.Collider);
+            bool skipEffectCreation = pipes != null && pipes.IsInSafeZone(runner.Collider);
             if (skipEffectCreation)
             {
                 return null;
@@ -57,7 +57,7 @@ public class CollectibleEffectFactory : ICollectibleEffectFactory
     private void HoleEffect(Collider collider)
     {
         gameState.gameOver = true;
-        raccoon.Fall();
+        runner.Fall();
         PlaySound(collider);
     }
 

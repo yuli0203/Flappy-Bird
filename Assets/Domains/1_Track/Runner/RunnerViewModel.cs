@@ -5,7 +5,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using VContainer;
 
-public class RaccoonViewModel : MonoBehaviour
+public class RunnerViewModel
+    : MonoBehaviour
 {
     [SerializeField] Animator animator;
     [SerializeField] float idleSpeed = 1;
