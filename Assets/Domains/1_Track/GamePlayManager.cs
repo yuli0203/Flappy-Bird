@@ -43,12 +43,6 @@ public class GamePlayManager : TickableSubscriber
 
         currentCollider = collider;
 
-        // Check if the currentAction is in progress
-        if (currentAction != null)
-        {
-            return;
-        }
-
         // Create a new UniTask only if the previous one has completed
         currentAction = effectFatory.CreateEffect(collider);
 
